@@ -1,0 +1,3 @@
+DB_NAME = 'ksurp'
+
+SERVICE_ID_LENGTH = 32
