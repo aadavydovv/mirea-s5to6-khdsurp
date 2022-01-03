@@ -1,5 +1,5 @@
-from mysql.node.models import Job
 from mysql.base.builder_base import MySQLBuilderBase
+from mysql.node.models import Job
 
 
 class MySQLBuilderNode(MySQLBuilderBase):

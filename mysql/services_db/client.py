@@ -1,7 +1,7 @@
-from mysql.services_db.models import Service
-from mysql.services_db.constants import DB_NAME
 from mysql.base.client_base import MySQLClientBase
 from mysql.services_db.builder import MySQLBuilderServicesDB
+from mysql.services_db.constants import DB_NAME
+from mysql.services_db.models import Service
 
 
 class MySQLClientServicesDB(MySQLClientBase):

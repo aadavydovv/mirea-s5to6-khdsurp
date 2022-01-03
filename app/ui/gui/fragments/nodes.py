@@ -2,8 +2,8 @@ import tkinter as tk
 
 from app.http_client import HTTPClient
 from app.misc.constants import DB_NODES_USER, DB_NODES_PASSWORD, DB_NODES_NAME, DB_NODES_HOST, DB_NODES_PORT
-from mysql.nodes_db.client import MySQLClientNodesDB
 from app.ui.gui.objects.entry_list import EntryList
+from mysql.nodes_db.client import MySQLClientNodesDB
 
 
 class FragmentNodes:

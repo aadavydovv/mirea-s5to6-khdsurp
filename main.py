@@ -2,8 +2,8 @@ from sqlalchemy.exc import ProgrammingError
 
 from app.misc.constants import (DB_NODES_USER, DB_NODES_PASSWORD, DB_NODES_NAME, DB_NODES_HOST, DB_NODES_PORT,
                                 LIST_OF_NODES)
-from mysql.nodes_db.client import MySQLClientNodesDB
 from app.ui.gui.windows.main import WindowMain
+from mysql.nodes_db.client import MySQLClientNodesDB
 
 with MySQLClientNodesDB(DB_NODES_USER,
                         DB_NODES_PASSWORD,

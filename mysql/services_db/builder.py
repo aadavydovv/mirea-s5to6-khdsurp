@@ -1,5 +1,5 @@
-from mysql.services_db.models import Service
 from mysql.base.builder_base import MySQLBuilderBase
+from mysql.services_db.models import Service
 
 
 class MySQLBuilderServicesDB(MySQLBuilderBase):

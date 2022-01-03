@@ -1,13 +1,12 @@
 import tkinter as tk
-from tkinter import ttk
 import tkinter.font as tkfont
+from tkinter import ttk
 
 from app.ui.gui.misc.constants import BG
 from app.ui.gui.misc.functions import setup_widget_size
 
 
 class WindowServiceDescription:
-
     class TextScrollCombo(ttk.Frame):
 
         def __init__(self, *args, **kwargs):
@@ -36,5 +35,5 @@ class WindowServiceDescription:
         combo.txt.config(font=font, undo=True, wrap='word')
         combo.txt.config(borderwidth=3, relief=tk.SUNKEN)
 
-        combo.txt.insert(tk.INSERT, text * 100)
+        combo.txt.insert(tk.INSERT, text)
         combo.txt.configure(state='disabled')

@@ -5,14 +5,14 @@ from app.http_client import HTTPClient
 from app.misc.constants import (DB_NODES_USER, DB_NODES_PASSWORD, DB_NODES_NAME, DB_NODES_HOST, DB_NODES_PORT,
                                 DB_SERVICES_USER, DB_SERVICES_PASSWORD, DB_SERVICES_NAME, DB_SERVICES_HOST,
                                 DB_SERVICES_PORT)
-from mysql.nodes_db.client import MySQLClientNodesDB
-from mysql.services_db.client import MySQLClientServicesDB
 from app.ui.gui.misc.constants import BG, PAD_X, PAD_Y
 from app.ui.gui.misc.functions import setup_widget_size
 from app.ui.gui.objects.button import Button
 from app.ui.gui.objects.entry_list import EntryList
 from app.ui.gui.objects.label import Label
 from app.ui.gui.windows.service_description import WindowServiceDescription
+from mysql.nodes_db.client import MySQLClientNodesDB
+from mysql.services_db.client import MySQLClientServicesDB
 
 
 class WindowSelectedService:

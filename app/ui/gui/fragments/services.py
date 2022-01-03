@@ -1,7 +1,8 @@
-from app.misc.constants import DB_SERVICES_PORT, DB_SERVICES_HOST, DB_SERVICES_NAME, DB_SERVICES_USER, DB_SERVICES_PASSWORD
-from mysql.services_db.client import MySQLClientServicesDB
+from app.misc.constants import DB_SERVICES_PORT, DB_SERVICES_HOST, DB_SERVICES_NAME, DB_SERVICES_USER, \
+    DB_SERVICES_PASSWORD
 from app.ui.gui.objects.entry_list import EntryList
 from app.ui.gui.windows.selected_service import WindowSelectedService
+from mysql.services_db.client import MySQLClientServicesDB
 
 
 class FragmentServices:

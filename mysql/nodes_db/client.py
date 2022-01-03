@@ -1,7 +1,7 @@
-from mysql.nodes_db.models import Node
-from mysql.nodes_db.constants import DB_NAME
 from mysql.base.client_base import MySQLClientBase
 from mysql.nodes_db.builder import MySQLBuilderNodesDB
+from mysql.nodes_db.constants import DB_NAME
+from mysql.nodes_db.models import Node
 
 
 class MySQLClientNodesDB(MySQLClientBase):

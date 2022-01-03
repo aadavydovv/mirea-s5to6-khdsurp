@@ -1,5 +1,5 @@
-from mysql.nodes_db.models import Node
 from mysql.base.builder_base import MySQLBuilderBase
+from mysql.nodes_db.models import Node
 
 
 class MySQLBuilderNodesDB(MySQLBuilderBase):

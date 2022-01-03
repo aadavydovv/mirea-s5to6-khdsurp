@@ -1,10 +1,10 @@
 import tkinter as tk
-from tkinter import ttk
 import tkinter.font as tkfont
+from tkinter import ttk
 
 from app.ui.gui.fragments.nodes import FragmentNodes
 from app.ui.gui.fragments.services import FragmentServices
-from app.ui.gui.misc.constants import BG, COLOR_PRIMARY_DARK, COLOR_PRIMARY_NORMAL, COLOR_PRIMARY_TEXT
+from app.ui.gui.misc.constants import BG
 from app.ui.gui.misc.functions import setup_widget_size
 
 
