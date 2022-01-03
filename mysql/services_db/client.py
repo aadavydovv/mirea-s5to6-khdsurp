@@ -9,8 +9,15 @@ class MySQLClientServicesDB(MySQLClientBase):
     def __init__(self, user, password, db_name, host, port, db_exists=True):
         super().__init__(user, password, db_name, host, port, MySQLBuilderServicesDB, db_exists)
 
-    def get_services(self):
-        return self.session.query(Service).all()
+    def get_services(self, are_keys_needed=False):
+        query = self.session.query(Service)
+        if are_keys_needed:
+            return query.all(), Service.__table__.columns
+        else:
+            return query.all()
+
+    def get_service(self, service_id):
+        return self.session.query(Service).get(service_id)
 
     # temporary
     def add_service(self, service_id, service_description):
@@ -27,12 +34,6 @@ class MySQLClientServicesDB(MySQLClientBase):
 
         Service.metadata.tables[Service.__tablename__].create(self._engine)
 
-        self.add_service('service_01', 'description of service_01')
-        self.add_service('service_02', 'description of service_02')
-        self.add_service('service_03', 'description of service_03')
-        self.add_service('service_04', 'description of service_04')
-        self.add_service('service_06', 'description of service_06')
-        self.add_service('service_07', 'description of service_07')
-        self.add_service('service_08', 'description of service_08')
-        self.add_service('service_09', 'description of service_09')
-        self.add_service('service_10', 'description of service_10')
+        for n in range(1, 11):
+            service_id = f'service_{str(n).zfill(2)}'
+            self.add_service(service_id, f'описание службы "{service_id}"')

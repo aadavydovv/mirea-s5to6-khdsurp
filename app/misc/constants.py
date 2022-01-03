@@ -1,4 +1,4 @@
-from misc.node import Node
+from app.misc.node import Node
 
 _DEFAULT_NODE_PORT = 5000
 LIST_OF_NODES = (
