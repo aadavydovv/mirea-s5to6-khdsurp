@@ -1,0 +1,58 @@
+version: '2.1'
+
+networks:
+  network_server_db:
+    ipam:
+      config:
+        - subnet: 172.111.111.0/24
+  network_server_web:
+    ipam:
+      config:
+        - subnet: 172.112.112.0/24
+  network_nodes:
+    ipam:
+      config:
+        - subnet: 172.113.113.0/24
+
+services:
+  server_db:
+    image: 'mariadb:latest'
+    ports:
+      - "3306:3306"
+    networks:
+      network_server_db:
+        ipv4_address: 172.111.111.11
+      network_server_web:
+        ipv4_address: 172.112.112.12
+    environment:
+      MYSQL_ROOT_PASSWORD: p
+    healthcheck:
+      test: [ 'CMD', 'mysqladmin', '-uroot', '-pp', 'ping', '-h', '127.0.0.1' ]
+      timeout: 1s
+      retries: 30
+  server_web:
+    build:
+      context: .
+      dockerfile: images/web_server/Dockerfile
+    ports:
+      - "5000:80"
+    networks:
+      network_server_web:
+        ipv4_address: 172.112.112.112
+      network_server_db:
+        ipv4_address: 172.111.111.111
+      network_nodes:
+        ipv4_address: 172.113.113.113
+    depends_on:
+      server_db:
+        condition: service_healthy
+  node:
+    build:
+      context: .
+      dockerfile: images/node/Dockerfile
+    networks:
+      - network_nodes
+      - network_server_web
+    depends_on:
+      server_web:
+        condition: service_started

@@ -1,3 +1,3 @@
-DB_NAME = 'ksurp'
+DB_NAME = 'jobs'
 
 SERVICE_ID_LENGTH = 32

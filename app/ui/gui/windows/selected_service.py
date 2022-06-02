@@ -2,17 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 
 from app.http_client import HTTPClient
-from app.misc.constants import (DB_NODES_USER, DB_NODES_PASSWORD, DB_NODES_NAME, DB_NODES_HOST, DB_NODES_PORT,
-                                DB_SERVICES_USER, DB_SERVICES_PASSWORD, DB_SERVICES_NAME, DB_SERVICES_HOST,
-                                DB_SERVICES_PORT)
+from app.misc.constants import ADDRESS_WEBSERVER, PORT_WEBSERVER
 from app.ui.gui.misc.constants import BG, PAD_X, PAD_Y
 from app.ui.gui.misc.functions import setup_widget_size
 from app.ui.gui.objects.button import Button
 from app.ui.gui.objects.entry_list import EntryList
 from app.ui.gui.objects.label import Label
-from app.ui.gui.windows.service_description import WindowServiceDescription
-from mysql.nodes_db.client import MySQLClientNodesDB
-from mysql.services_db.client import MySQLClientServicesDB
+from app.ui.gui.windows.description import WindowDescription
 
 
 class WindowSelectedService:
@@ -23,32 +19,37 @@ class WindowSelectedService:
 
         Label(f'служба "{service_id}"', self.widget).pack(pady=(0, 16))
 
-        with MySQLClientNodesDB(DB_NODES_USER, DB_NODES_PASSWORD, DB_NODES_NAME, DB_NODES_HOST,
-                                DB_NODES_PORT) as mysql_nodes_db_client:
-            list_of_nodes = mysql_nodes_db_client.get_nodes()
+        self.http_client = HTTPClient(ADDRESS_WEBSERVER, PORT_WEBSERVER)
+
+        list_of_nodes = self.http_client.get_list_nodes()
 
         list_of_status_messages = []
 
         for node in list_of_nodes:
-            http_client = HTTPClient(node.host, node.port)
-
-            service_status_data = http_client.get_status_service(service_id).get('message')
+            service_status_data = self.http_client.get_status_service(node['host'], service_id)
             if service_status_data['service_status'] == 1:
                 list_of_status_messages.append(f'активна, ID работы: {service_status_data["job_id"]}')
             else:
                 list_of_status_messages.append('неактивна')
 
         columns = 'адрес узла', 'статус'
-        entries = list(zip([node.host for node in list_of_nodes], list_of_status_messages))
+        entries = list(zip([node['host'] for node in list_of_nodes], list_of_status_messages))
 
         frame_tv = ttk.Frame(self.widget)
-        EntryList(frame_tv, columns, entries, None, selectmode=tk.NONE)
+
+        def make_job_description(tv):
+            selected_entry = entries[int(tv.selection()[0])]
+            node_address = selected_entry[0]
+            job_id = selected_entry[1].partition(': ')[2]
+
+            job_description = self.http_client.get_description_job(node_address, job_id)
+            WindowDescription(self.widget, job_description)
+
+        EntryList(frame_tv, columns, entries, lambda tv: make_job_description(tv))
 
         def on_click_button_description():
-            with MySQLClientServicesDB(DB_SERVICES_USER, DB_SERVICES_PASSWORD, DB_SERVICES_NAME, DB_SERVICES_HOST,
-                                       DB_SERVICES_PORT) as mysql_services_db_client:
-                description = mysql_services_db_client.get_service(service_id).description
-            WindowServiceDescription(self.widget, description)
+            description = self.http_client.get_description_service(service_id)
+            WindowDescription(self.widget, description)
 
         Button('показать описание', self.widget,
                action=lambda event: on_click_button_description()) \

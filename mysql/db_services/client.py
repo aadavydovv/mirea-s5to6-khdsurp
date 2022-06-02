@@ -1,25 +1,25 @@
 from mysql.base.client_base import MySQLClientBase
-from mysql.services_db.builder import MySQLBuilderServicesDB
-from mysql.services_db.constants import DB_NAME
-from mysql.services_db.models import Service
+from mysql.db_services.builder import MySQLBuilderServices
+from mysql.db_services.constants import DB_NAME
+from mysql.db_services.models import Service
 
 
-class MySQLClientServicesDB(MySQLClientBase):
+class MySQLClientServices(MySQLClientBase):
 
     def __init__(self, user, password, db_name, host, port, db_exists=True):
-        super().__init__(user, password, db_name, host, port, MySQLBuilderServicesDB, db_exists)
+        super().__init__(user, password, db_name, host, port, MySQLBuilderServices, db_exists)
 
     def get_services(self, are_keys_needed=False):
         query = self.session.query(Service)
         if are_keys_needed:
-            return query.all(), Service.__table__.columns
+            to_return = query.all(), Service.__table__.columns
         else:
-            return query.all()
+            to_return = query.all()
+        return to_return
 
     def get_service(self, service_id):
         return self.session.query(Service).get(service_id)
 
-    # temporary
     def add_service(self, service_id, service_description):
         return self._builder.add_service(service_id, service_description)
 

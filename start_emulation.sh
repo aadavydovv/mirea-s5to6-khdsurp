@@ -1,1 +1,1 @@
-docker-compose -f docker-compose.yml up -d --build --scale node=5
+docker-compose -f compose.yml up -d --build --scale node=5

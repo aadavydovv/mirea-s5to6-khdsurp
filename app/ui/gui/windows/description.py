@@ -6,7 +6,7 @@ from app.ui.gui.misc.constants import BG
 from app.ui.gui.misc.functions import setup_widget_size
 
 
-class WindowServiceDescription:
+class WindowDescription:
     class TextScrollCombo(ttk.Frame):
 
         def __init__(self, *args, **kwargs):

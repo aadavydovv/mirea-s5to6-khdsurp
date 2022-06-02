@@ -1,9 +1,12 @@
 /etc/init.d/mariadb start
 
-# can fail if i won't ping it until it is up before this?
-mysql < create_root_user.sql
+while ! mysqladmin -uroot -pp ping -h 127.0.0.1 | grep 'mysqld is alive'; do
+  mysql < create_root_user.sql
+  sleep 1
+done
+
 python3 init_db.py
 
 echo -n $((RANDOM % 2)) > /wd/upgrade_status/value
 
-FLASK_APP=web_server.py flask run --host=0.0.0.0
+FLASK_APP=flask_app.py flask run --host=0.0.0.0

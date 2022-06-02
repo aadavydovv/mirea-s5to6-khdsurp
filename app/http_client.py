@@ -1,42 +1,38 @@
-import json
-import socket
+import requests as requests
 
 
 class HTTPClient:
 
-    def __init__(self, node_host, node_port):
-        self.node_host = node_host
-        self.node_port = node_port
+    def __init__(self, server_address, server_port):
+        self.url_prefix = f'http://{server_address}:{server_port}'
 
-    def _connect(self):
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.settimeout(5)
-        self.client.connect((self.node_host, int(self.node_port)))
+    def get_status_update(self, node_address):
+        return requests.post(
+            url=f'{self.url_prefix}/status/update',
+            json={'node_address': node_address}).json()
 
-    def _receive(self):
-        data = []
+    def get_status_service(self, node_address, service_id):
+        return requests.post(
+            url=f'{self.url_prefix}/status/service',
+            json={'node_address': node_address,
+                  'service_id': service_id}
+        ).json()
 
-        while True:
-            data_part = self.client.recv(4096)
-            if data_part:
-                data.append(data_part.decode())
-            else:
-                self.client.close()
-                break
+    def get_list_nodes(self):
+        return requests.get(f'{self.url_prefix}/list/nodes').json()
 
-        return {'message': json.loads(''.join(data).splitlines()[-1]), 'status': int(data[0].split(' ')[1])}
+    def get_list_services(self):
+        return requests.get(f'{self.url_prefix}/list/services').json()
 
-    def _make_request(self, request):
-        self._connect()
-        self.client.send(request.encode())
-        return self._receive()
+    def get_description_service(self, service_id):
+        return requests.post(
+            url=f'{self.url_prefix}/description/service',
+            json={'service_id': service_id}
+        ).json()
 
-    def get_status_upgrade(self):
-        request = f'GET /status/upgrade HTTP/1.1\r\n' \
-                  f'Host: {self.node_host}\r\n\r\n'
-        return self._make_request(request)
-
-    def get_status_service(self, service_id):
-        request = f'GET /status/service/{service_id} HTTP/1.1\r\n' \
-                  f'Host: {self.node_host}\r\n\r\n'
-        return self._make_request(request)
+    def get_description_job(self, node_address, job_id):
+        return requests.post(
+            url=f'{self.url_prefix}/description/job',
+            json={'node_address': node_address,
+                  'job_id': job_id}
+        ).json()

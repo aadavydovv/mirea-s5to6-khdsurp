@@ -1,13 +1,13 @@
 from mysql.base.client_base import MySQLClientBase
-from mysql.nodes_db.builder import MySQLBuilderNodesDB
-from mysql.nodes_db.constants import DB_NAME
-from mysql.nodes_db.models import Node
+from mysql.db_nodes.builder import MySQLBuilderNodes
+from mysql.db_nodes.constants import DB_NAME
+from mysql.db_nodes.models import Node
 
 
-class MySQLClientNodesDB(MySQLClientBase):
+class MySQLClientNodes(MySQLClientBase):
 
     def __init__(self, user, password, db_name, host, port, db_exists=True):
-        super().__init__(user, password, db_name, host, port, MySQLBuilderNodesDB, db_exists)
+        super().__init__(user, password, db_name, host, port, MySQLBuilderNodes, db_exists)
 
     def get_nodes(self):
         return self.session.query(Node).all()
