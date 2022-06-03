@@ -1,1 +1,0 @@
-cat /wd/upgrade_status/value
