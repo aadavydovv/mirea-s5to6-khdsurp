@@ -6,8 +6,8 @@ class HTTPClient:
     def __init__(self, server_address, server_port):
         self.base_url = f'http://{server_address}:{server_port}'
 
-    def get_status_upgrade(self):
-        return requests.get(f'{self.base_url}/status/upgrade').json()
+    def get_status_update(self):
+        return requests.get(f'{self.base_url}/status/update').json()
 
     def get_status_service(self, service_id):
         return requests.post(

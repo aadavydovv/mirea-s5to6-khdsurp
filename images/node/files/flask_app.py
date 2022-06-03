@@ -9,9 +9,9 @@ from mysql.db_jobs.client import MySQLClientJobs
 app = Flask(__name__)
 
 
-@app.route('/status/upgrade', methods=['GET'])
-def request_get_status_upgrade():
-    to_jsonify = int(subprocess.check_output(["bash", "/wd/upgrade_status/get.sh"]).decode('utf-8'))
+@app.route('/status/update', methods=['GET'])
+def request_get_status_update():
+    to_jsonify = int(subprocess.check_output(["bash", "/wd/update_status/get.sh"]).decode('utf-8'))
     return jsonify(to_jsonify)
 
 

@@ -11,6 +11,7 @@ class HTTPClient:
             url=f'{self.url_prefix}/status/update',
             json={'node_address': node_address}).json()
 
+
     def get_status_service(self, node_address, service_id):
         return requests.post(
             url=f'{self.url_prefix}/status/service',

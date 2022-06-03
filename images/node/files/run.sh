@@ -7,6 +7,6 @@ done
 
 python3 init_db.py
 
-echo -n $((RANDOM % 2)) > /wd/upgrade_status/value
+echo -n $((RANDOM % 2)) > /wd/update_status/value
 
 FLASK_APP=flask_app.py flask run --host=0.0.0.0

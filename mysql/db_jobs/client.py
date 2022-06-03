@@ -32,4 +32,4 @@ class MySQLClientJobs(MySQLClientBase):
         Job.metadata.tables[Job.__tablename__].create(self._engine)
 
         for service_id in random.sample(list_of_service_ids, len(list_of_service_ids) // random.choice((2, 3, 4))):
-            self.add_job(service_id, f'метаданные работы сервиса "{service_id}"')
+            self.add_job(service_id, f'метаданные работы службы "{service_id}"')

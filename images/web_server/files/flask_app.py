@@ -14,7 +14,7 @@ def request_get_status_update():
     node_address = request_data['node_address']
 
     http_client = HTTPClient(node_address, DEFAULT_NODE_PORT)
-    return jsonify(http_client.get_status_upgrade())
+    return jsonify(http_client.get_status_update())
 
 
 @app.route('/status/service', methods=['POST'])
