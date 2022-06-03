@@ -43,13 +43,13 @@ class WindowSelectedService:
             job_id = selected_entry[1].partition(': ')[2]
 
             job_description = self.http_client.get_description_job(node_address, job_id)
-            WindowDescription(self.widget, job_description)
+            WindowDescription(self.widget, job_description, f'описание работы №{job_id}\nузла {node_address}')
 
         EntryList(frame_tv, columns, entries, lambda tv: make_job_description(tv))
 
         def on_click_button_description():
             description = self.http_client.get_description_service(service_id)
-            WindowDescription(self.widget, description)
+            WindowDescription(self.widget, description, f'описание службы "{service_id}"')
 
         Button('показать описание', self.widget,
                action=lambda event: on_click_button_description()) \

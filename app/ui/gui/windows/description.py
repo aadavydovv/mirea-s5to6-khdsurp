@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.font as tkfont
 from tkinter import ttk
 
+from app.ui.gui.objects.label import Label
 from app.ui.gui.misc.constants import BG
 from app.ui.gui.misc.functions import setup_widget_size
 
@@ -23,9 +24,11 @@ class WindowDescription:
             scrollbar.grid(row=0, column=1, sticky='nsew')
             self.txt['yscrollcommand'] = scrollbar.set
 
-    def __init__(self, root, text):
+    def __init__(self, root, text, title):
         self.widget = tk.Toplevel(root, bg=BG, padx=16, pady=16)
         setup_widget_size(self.widget, width_c=2.3, height_c=1.8)
+
+        Label(title, self.widget).pack(pady=(0, 16))
 
         combo = self.TextScrollCombo(self.widget)
         combo.pack(fill=tk.BOTH, expand=True)
